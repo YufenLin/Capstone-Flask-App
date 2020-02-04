@@ -7,6 +7,12 @@
 <body>
     Hi, You are user {{ user_id }}.
     User {{similar_user}} and you have similar taste.
+    <!-- {{similar_user_top}} -->
+    {% for table in tables %}
+        {{titles[loop.index]}}
+        {{ table|safe }}
+    {% endfor %}
+
     <!-- You are user {{ user_exist  }} -->
     <!-- We predict that this wine is from class {{ predicted_class }} -->
     <br>
