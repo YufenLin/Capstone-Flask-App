@@ -2,14 +2,21 @@
 <html lang="en">
 <head>
     <title>First Flask App Results</title>
-    <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <!-- <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='bootstrap.min.css') }}"> -->
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    Hi, You are user {{ user_id }}.
-    User {{similar_user}} and you have similar taste.
+    <h1>
+        Hi, You are user {{ user_id }}
+    </h1>
+    <h2>
+        User {{similar_user}} and you have similar taste.
+    </h2>
+    
+    
     <!-- {{similar_user_top}} -->
     {% for table in tables %}
-        {{titles[loop.index]}}
+        <!-- {{columns[loop.index]}} -->
         {{ table|safe }}
     {% endfor %}
 
