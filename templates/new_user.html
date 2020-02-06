@@ -2,12 +2,18 @@
 <html lang="en">
 <head>
     <title>First Flask App Results</title>
-    <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <!-- <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='bootstrap.min.css') }}"> -->
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    Hi, You are a new user.{{wine_title}}
+    <h2 class="display-3">Hi, You are a new user.{{wine_title}}</h2>
+    
     <!-- We predict that this wine is from class {{ predicted_class }} -->
     <br>
+    {% for table in tables %}
+        <!-- {{columns[loop.index]}} -->
+        {{ table|safe }}
+    {% endfor %}
 
     <!-- <img src="{{ url_for('static', filename='upward_sloping_chart.png') }}" alt=""> -->
     <a href="/">Go back home</a>

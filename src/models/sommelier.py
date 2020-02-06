@@ -78,7 +78,22 @@ def get_wine_data(wine_id_list, wine_user):
     top_n_df = top_n_df.sort_values("wine_id") 
     top_n_df.drop_duplicates(subset ="wine_id", keep = 'first', inplace = True) 
     
-    return top_n_df[['wine_id','title','country','price','flavor_words_str', 'description']]
+    return top_n_df[['wine_id','title','country','price','category','flavor_words_str', 'description']]
+    # return top_n_df[['title','country','price', 'description']]
+
+def get_from_cos(wineid, wine, n, cosine_sim):
+    indices = list(wine.wine_id)
+    if wineid not in indices:
+        return []
+    else:
+        idx = wine[wine['wine_id'] == wineid].index[0]
+    scores = pd.Series(cosine_sim[idx]).sort_values(ascending = False)
+    
+    # top n most similar wine indexes
+    # use 1:n because 0 is the same wine entered
+    top_n_idx = list(scores.iloc[1:n+1].index)
+    
+    return top_n_idx
 
 def recommend_wine(wineid, n = 5):
     with open("src/models/wine_train.pkl", 'rb') as f:
@@ -86,17 +101,7 @@ def recommend_wine(wineid, n = 5):
     f.close()
     cosine_sim = np.load("src/models/outfile.npy")
 
-    indices = list(wine.wine_id)
-    if wineid not in indices:
-        return []
-    else:
-        idx = wine[wine['wine_id'] == wineid].index[0]
-
-    scores = pd.Series(cosine_sim[idx]).sort_values(ascending = False)
-    
-    # top n most similar wine indexes
-    # use 1:n because 0 is the same wine entered
-    top_n_idx = list(scores.iloc[1:n+1].index)
+    top_n_idx = get_from_cos(wineid, wine, n, cosine_sim)
     # query_wine = get_wine_data(list(wine.iloc[wineid]['wine_id']) , wine)
     top_n_wine = get_wine_data(list(wine.iloc[top_n_idx]['wine_id']) , wine)
     return top_n_wine
@@ -104,3 +109,71 @@ def recommend_wine(wineid, n = 5):
 def get_wine_id(title):
      wine_user = load_model()
      return wine_user[wine_user['title']==title]['wine_id'].values[0]
+
+def recommend_from_top_rating(user_id):
+    with open("src/models/wine_train.pkl", 'rb') as f:
+        wine = pickle.load(f)
+    f.close()
+    cosine_sim = np.load("src/models/outfile.npy")
+
+    user_top_rating = wine[wine['taster_id']==user_id].sort_values(by='points', ascending=False).head(10)
+    user_top_rating = user_top_rating.loc[:, 'wine_id'].values
+    recommend_from_rating = []
+    n = 5
+    for wine_id in user_top_rating:
+        recommend_from_rating += (get_from_cos(wine_id, wine, n, cosine_sim))
+    keep_wine_id = []
+    for wine_id in recommend_from_rating:
+        if (wine[wine['wine_id']==wine_id]['taster_id']==user_id).any():
+            pass
+        else:
+            keep_wine_id.append(wine_id)
+        if len(keep_wine_id)>10:
+            break
+
+    keep_wine_id_df = get_wine_data(keep_wine_id, wine)
+
+    return keep_wine_id_df
+
+def get_user_name(user_id):
+    with open("src/models/user.pkl", 'rb') as f:
+        user = pickle.load(f)
+    f.close()
+    return user[user['taster_id']==user_id]['taster_name'].values[0]
+
+def top_rating():
+    with open("src/models/wine_user.pkl", 'rb') as f:
+        wine_user = pickle.load(f)
+    f.close()
+
+    wine = wine_user[['wine_id','title','points']]
+    points_mean = wine.groupby('wine_id')['points'].mean()
+    wine.drop(['points'], axis=1, inplace=True)
+    wine = wine.drop_duplicates('wine_id')
+    wine = wine.sort_values(by='wine_id')
+    wine['mean'] = points_mean.values
+    # wine = wine.reset_index(drop=True)
+
+    top_rating_id = wine.sort_values(by='mean',ascending=False).head()['wine_id'].values
+    top_rating_df = get_wine_data(top_rating_id, wine_user)
+
+    return top_rating_df
+
+def query_wine(cat, country, price_max):
+    with open("src/models/wine_user.pkl", 'rb') as f:
+        wine_user = pickle.load(f)
+    f.close()
+    result = wine_user[wine_user['category']==cat]
+    country_list = ['US', 'France', 'Italy', 'Spain', 'Portugal', 'Chile']
+    
+    if country in country_list:
+        result = result[result['country']==country]
+    else:
+        result = result[~result['country'].isin(country_list)]
+    result = result[result['price']<=price_max]
+
+    result_id = result['wine_id'].head().values
+    result_df = get_wine_data(result_id, wine_user)
+
+    return result_df
+
