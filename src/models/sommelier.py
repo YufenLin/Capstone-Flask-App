@@ -1,5 +1,6 @@
 import pickle
-import pandas
+import pandas as pd
+import numpy as np
 from surprise import Reader, Dataset, SVD
 from surprise.model_selection import train_test_split
 
@@ -77,27 +78,29 @@ def get_wine_data(wine_id_list, wine_user):
     top_n_df = top_n_df.sort_values("wine_id") 
     top_n_df.drop_duplicates(subset ="wine_id", keep = 'first', inplace = True) 
     
-    return top_n_df[['wine_id','title','country','price']]
+    return top_n_df[['wine_id','title','country','price','flavor_words_str', 'description']]
 
-#  def recommend_wine(wineid, n = 5, cosine_sim = tfidf_cos): 
-#     with open("src/models/wine_train.pkl", 'rb') as f:
-#         wine = pickle.load(f)
-#     f.close()
-#     indices = list(wine.wine_id)
+def recommend_wine(wineid, n = 5):
+    with open("src/models/wine_train.pkl", 'rb') as f:
+        wine = pickle.load(f)
+    f.close()
+    cosine_sim = np.load("src/models/outfile.npy")
 
-#     # retrieve matching movie title index
-#     if wineid not in indices:
-#         print("Wine not in database.")
-#         return
-#     else:
-#         print("Wine is in database.")
-#         idx = wine[wine['wine_id'] == wineid].index[0]
-#         print("Flavor:",wine[wine['wine_id'] == wineid]['flavor_words'])
-#     # cosine similarity scores of movies in descending order
-#     scores = pd.Series(cosine_sim[idx]).sort_values(ascending = False)
+    indices = list(wine.wine_id)
+    if wineid not in indices:
+        return []
+    else:
+        idx = wine[wine['wine_id'] == wineid].index[0]
+
+    scores = pd.Series(cosine_sim[idx]).sort_values(ascending = False)
     
-#     # top n most similar movies indexes
-#     # use 1:n because 0 is the same movie entered
-#     top_n_idx = list(scores.iloc[0:n].index)
-        
-#     return wine['wine_id'].iloc[top_n_idx]
+    # top n most similar wine indexes
+    # use 1:n because 0 is the same wine entered
+    top_n_idx = list(scores.iloc[1:n+1].index)
+    # query_wine = get_wine_data(list(wine.iloc[wineid]['wine_id']) , wine)
+    top_n_wine = get_wine_data(list(wine.iloc[top_n_idx]['wine_id']) , wine)
+    return top_n_wine
+
+def get_wine_id(title):
+     wine_user = load_model()
+     return wine_user[wine_user['title']==title]['wine_id'].values[0]

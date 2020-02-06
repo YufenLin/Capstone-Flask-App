@@ -12,9 +12,14 @@
         </p>
         <p>
           <form action="/get_wine" method="post">
-            <p>Input the wine ID to get similar taste wine.</p>
-            <input type="text" name="wine_id" value="89368">
+            <h3>Input wine to get similar taste wine.</h3>
+            
+            <input type="radio" name="options" id="option1", value="option1"> Wine ID <br>
+            <input type="text" name="wine_id" value="89368", size="6"> <br>
+            <input type="radio" name="options" id="option2", value="option2"> Title <br>
+            <input type="text" name="wine_title" value="Quinta dos Avidagos 2011 Avidagos Red (Douro)", size="60"> <br><br>
             <input type="submit" class="btn btn-primary btn" value="Send">
+            
             <p>========================================</p>
           </form>
 
@@ -22,9 +27,9 @@
             <p>Input your User ID, input 0 if you don't have.</p>
             <input type="text" name="user_id" value="0">
             <input type="submit" class="btn btn-primary btn" value="Login">
-
+            
             <p>========================================</p>
-            <p>Alcohol</p>
+            <!-- <p>Alcohol</p>
             <input type="text" name="Alcohol" value="12.82">
             <p>Malic acid</p>
             <input type="text" name="Malic acid" value="3.37">
@@ -49,11 +54,9 @@
             <p>OD280/OD315 of diluted wines</p>
             <input type="text" name="OD280/OD315 of diluted wines" value="1.75">
             <p>Proline</p>
-            <input type="text" name="Proline" value="685.0">
+            <input type="text" name="Proline" value="685.0"> -->
             <br>
-            
           </form>
-          
         </p>
       </div>
     </div>

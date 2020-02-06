@@ -3,6 +3,8 @@ a, h1, h2       { color: #377ba8; }
 h1, h2          { margin: 20px; }
 h1              { border-bottom: 2px solid #eee; }
 h2              { font-size: 1.2em; }
+h3              { font-size: 1em; }
+
 
 table.dataframe, .dataframe th, .dataframe td {
   border: none;
