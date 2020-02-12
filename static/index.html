@@ -55,7 +55,7 @@
         <h1 class="display-3", style = "font-family:Brush Script MT,arial,helvetica; ">Personal Sommelier</h1>
         <!-- font-family:Brush Script MT,arial,helvetica; -->
         <div class="tab">
-          <button class="tablinks" onclick="openCity(event, 'London')">Wine</button>
+          <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">Wine</button>
           <button class="tablinks" onclick="openCity(event, 'Paris')">User</button>
           <button class="tablinks" onclick="openCity(event, 'Tokyo')">Query</button>
           <div id="London" class="tabcontent">
@@ -164,6 +164,7 @@
           </div>
           
           <script>
+          document.getElementById("defaultOpen").click();
           function openCity(evt, cityName) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tabcontent");
