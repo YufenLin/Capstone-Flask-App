@@ -4,113 +4,203 @@
     
     <link rel="stylesheet" media="screen" href="/static/bootstrap.min.css">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <style>
+      /* body {font-family: Arial;} */
+      
+      /* Style the tab */
+      .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+      }
+      
+      /* Style the buttons inside the tab */
+      .tab button {
+        /* background-color: inherit; */
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 17px;
+      }
+      
+      /* Change background color of buttons on hover */
+      .tab button:hover {
+        background-color: #ddd;
+      }
+      
+      /* Create an active/current tablink class */
+      .tab button.active {
+        background-color: #ccc;
+      }
+      
+      /* Style the tab content */
+      .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+        background-color: rgba(159, 86, 175, 0.289);
+      }
+      </style>
   </head>
   <body>
+    
+    
+
     <!-- <div class="jumbotron", background-image: href="/static/images/copy.gif"); -->
-    <div class="jumbotron", style="background-color:rgba(140, 145, 154, 0.796)">
+    <!-- <div class="jumbotron", style="background-color:rgba(141, 27, 159, 0.803)"> -->
+    <div class="jumbotron", style="background-image: linear-gradient(-60deg, rgb(202, 18, 211), rgba(159, 86, 175, 0.289));">
       <div class="container">
-        <h1 class="display-3">Personal Sommelier</h1>
-        
+        <!-- <h1 class="display-3", style = "font-family:Brush Script MT,arial,helvetica;">Personal Sommelier</h1> -->
+        <h1 class="display-3", style = "color: rgb(58, 87, 26); ">Personal Sommelier</h1>
+        <!-- font-family:Brush Script MT,arial,helvetica; -->
+        <div class="tab">
+          <button class="tablinks" onclick="openCity(event, 'London')">Wine</button>
+          <button class="tablinks" onclick="openCity(event, 'Paris')">User</button>
+          <button class="tablinks" onclick="openCity(event, 'Tokyo')">Query</button>
+          <div id="London" class="tabcontent">
+            <form action="/get_wine" method="post">
+              <br><br><br>
+              <h4>Find similar-tasting wines</h4>
+              <br>
+              <h4>
+                <input type="radio" name="options" id="option2", value="option2"> Title 
+                <input type="text" name="wine_title" value="Quinta dos Avidagos 2011 Avidagos Red (Douro)", size="40"> <br><br>
+              
+                <input type="radio" name="options" id="option1", value="option1"> Wine ID
+                <input type="text" name="wine_id" value="89368", size="6">
+               
+              </h4>
+              <input type="submit" class="btn btn-primary btn" value="Send">
+             
+              </form>
+          </div>
+          
+          <div id="Paris" class="tabcontent">
+            <form action="/get_results" method="post">
+              <br><br><br>
+              <h4>Your ID
+              
+              <input type="text" name="user_id" value="0", size="2">
+              <input type="submit" class="btn btn-primary btn" value="Send">
+              </h4>
+  
+              <br>
+            </form> 
+          </div>
+          
+          <div id="Tokyo" class="tabcontent">
+            <form action="/get_wine_info" method="post">
+              <br><br><br>
+              <h4>Fine wine</h4>
+              <br>
+                <h4>category</h4>
+                <!-- <form> -->
+                <select name="category">
+                  <option type="text", value="red">red
+                  <option type="text", value="white">white
+                  <option type="text", value="sparkling">sparkling
+                  <option type="text", value="rose">rose
+                  <option type="text", value="other">others
+                </select>
+                <br><br>
+                <h4>country</h4>
+                <!-- <form> -->
+                <select name="country">
+                  <option type="text", value="US">US
+                  <option type="text", value="France">France
+                  <option type="text", value="Italy">Italy
+                  <option type="text", value="Spain">Spain
+                  <option type="text", value="Portugal">Portugal
+                  <option type="text", value="Chile">Chile
+                  <option type="text", value="Others">others
+                </select>
+                <br><br>
+  
+                <div class="rangeslider"> 
+                  <h4>Max Price <span id="demo"></span></h4>
+                  <input  name="price_max" type="range" min="1" max="100" value="50"
+                                  class="myslider" id="sliderRange"> 
+                </div> 
+                  
+                <script> 
+                var rangeslider = document.getElementById("sliderRange"); 
+                var output = document.getElementById("demo"); 
+                output.innerHTML = rangeslider.value; 
+                  
+                rangeslider.oninput = function() { 
+                  output.innerHTML = this.value; 
+                } 
+                </script> 
+                <!-- <h4>Flavor you like</h4> -->
+                <!-- <table>
+                  <tr>
+                    <td><input type="checkbox" name="flavor1" value="fruit"> fruit<br></td>
+                    <td><input type="checkbox" name="flavor2" value="acid"> acid<br> </td>
+                    <td><input type="checkbox" name="flavor3" value="cherri"> cherry<br></td>
+                    <td><input type="checkbox" name="flavor3" value="dri"> dry<br></td>
+                  
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" name="flavor1" value="appl"> apple<br></td>
+                    <td><input type="checkbox" name="flavor2" value="oak"> oak<br> </td>
+                    <td><input type="checkbox" name="flavor3" value="herb"> herb<br></td>
+                    <td><input type="checkbox" name="flavor3" value="citrus"> citrus<br></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" name="flavor3" value="blackberri"> blackberry<br></td>
+                    <td><input type="checkbox" name="flavor3" value="pepper"> pepper<br></td>
+                    <td><input type="checkbox" name="flavor3" value="vanilla"> vanilla<br></td>
+                    <td><input type="checkbox" name="flavor3" value="lemon"> lemon<br></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" name="flavor3" value="raspberri"> raspberry<br></td>
+                    <td><input type="checkbox" name="flavor3" value="peach"> peach<br></td>
+                    <td><input type="checkbox" name="flavor3" value="chocol"> chocolate<br></td>
+                    <td><input type="checkbox" name="flavor3" value="spici"> spicy<br></td>
+                  </tr>
+                </table> -->
+              <br>
+              <input type="submit" class="btn btn-primary btn" value="Find">
+              </form>
+          </div>
+          
+          <script>
+          function openCity(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+              tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+              tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+          }
+          </script>
+
         <!-- <p> -->
-          <hr>
-          <form action="/get_wine" method="post">
-            <h2>Input wine to get similar taste wine</h2>
-            <br>
-            <h4>
-              <input type="radio" name="options" id="option1", value="option1"> Wine ID
-              <input type="text" name="wine_id" value="89368", size="6"> 
-            </h4> 
-            <br>
+          
+            <!-- <form action="/get_wine" method="post">
+            <h3>Find similar-tasting wines</h3>
+            
             <h4>
               <input type="radio" name="options" id="option2", value="option2"> Title 
-              <input type="text" name="wine_title" value="Quinta dos Avidagos 2011 Avidagos Red (Douro)", size="60"> <br><br>
+              <input type="text" name="wine_title" value="Quinta dos Avidagos 2011 Avidagos Red (Douro)", size="40"> <br><br>
+            
+              <input type="radio" name="options" id="option1", value="option1"> Wine ID
+              <input type="text" name="wine_id" value="89368", size="6">
+              
+              <input type="submit" class="btn btn-primary btn" value="Send"> 
             </h4>
-            <input type="submit" class="btn btn-primary btn" value="Send">
-          </form>
-          <hr>
-          
-          <form action="/get_results" method="post">
-            <h2>Input your user ID</h2>
-            <h4>
-            <input type="text" name="user_id" value="0", size="2"><br><br>
-            </h4>
-            <input type="submit" class="btn btn-primary btn" value="Send">
-            <br>
-            <hr>
-          </form>
-          
-          <form action="/get_wine_info" method="post">
-            <h2>Fine wine</h2>
-            <br>
-              <h4>category</h4>
-              <!-- <form> -->
-              <select name="category">
-                <option type="text", value="red">red
-                <option type="text", value="white">white
-                <option type="text", value="sparkling">sparkling
-                <option type="text", value="rose">rose
-                <option type="text", value="other">others
-              </select>
-              <br><br>
-              <h4>country</h4>
-              <!-- <form> -->
-              <select name="country">
-                <option type="text", value="US">US
-                <option type="text", value="France">France
-                <option type="text", value="Italy">Italy
-                <option type="text", value="Spain">Spain
-                <option type="text", value="Portugal">Portugal
-                <option type="text", value="Chile">Chile
-                <option type="text", value="Others">others
-              </select>
-              <br><br>
+           
+            </form> -->
 
-              <div class="rangeslider"> 
-                <h4>Max Price <span id="demo"></span></h4>
-                <input  name="price_max" type="range" min="1" max="100" value="50"
-                                class="myslider" id="sliderRange"> 
-              </div> 
-                
-              <script> 
-              var rangeslider = document.getElementById("sliderRange"); 
-              var output = document.getElementById("demo"); 
-              output.innerHTML = rangeslider.value; 
-                
-              rangeslider.oninput = function() { 
-                output.innerHTML = this.value; 
-              } 
-              </script> 
-              <!-- <h4>Flavor you like</h4> -->
-              <!-- <table>
-                <tr>
-                  <td><input type="checkbox" name="flavor1" value="fruit"> fruit<br></td>
-                  <td><input type="checkbox" name="flavor2" value="acid"> acid<br> </td>
-                  <td><input type="checkbox" name="flavor3" value="cherri"> cherry<br></td>
-                  <td><input type="checkbox" name="flavor3" value="dri"> dry<br></td>
-                
-                </tr>
-                <tr>
-                  <td><input type="checkbox" name="flavor1" value="appl"> apple<br></td>
-                  <td><input type="checkbox" name="flavor2" value="oak"> oak<br> </td>
-                  <td><input type="checkbox" name="flavor3" value="herb"> herb<br></td>
-                  <td><input type="checkbox" name="flavor3" value="citrus"> citrus<br></td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" name="flavor3" value="blackberri"> blackberry<br></td>
-                  <td><input type="checkbox" name="flavor3" value="pepper"> pepper<br></td>
-                  <td><input type="checkbox" name="flavor3" value="vanilla"> vanilla<br></td>
-                  <td><input type="checkbox" name="flavor3" value="lemon"> lemon<br></td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" name="flavor3" value="raspberri"> raspberry<br></td>
-                  <td><input type="checkbox" name="flavor3" value="peach"> peach<br></td>
-                  <td><input type="checkbox" name="flavor3" value="chocol"> chocolate<br></td>
-                  <td><input type="checkbox" name="flavor3" value="spici"> spicy<br></td>
-                </tr>
-              </table> -->
-            <br>
-            <input type="submit" class="btn btn-primary btn" value="Find">
-            </form>
         <!-- </p> -->
       </div>
     </div>
