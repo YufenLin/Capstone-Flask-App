@@ -1,21 +1,25 @@
 body            { font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;}
-a, h1, h2       { color: #377ba8; }
+a, h1, h2, h3       { color: #377ba8; }
 h1, h2          { margin: 20px; }
 h1              { border-bottom: 2px solid #eee; }
 h2              { font-size: 1.2em; }
+h3              { font-size: 1em; }
+h4              { font-size: 0.5em; }
+
 
 table.dataframe, .dataframe th, .dataframe td {
   border: none;
   border-bottom: 1px solid #C8C8C8;
   border-collapse: collapse;
   text-align:left;
-  padding: 10px;
+  padding: 6px;
   margin-bottom: 40px;
-  font-size: 1.2em;
-  background-color: #c89cd7;
+  font-size: 1em;
+  /* background-color: #c89cd7; */
+  background-color: #9cb2d7;
 }
 
-.male th {
+.my_df th {
     background-color: #add8e6;
     color: white;
 }
@@ -29,3 +33,41 @@ tr:nth-child(odd)		{ background-color:#eee; }
 tr:nth-child(even)	{ background-color:#fff; }
 
 tr:hover            { background-color: #ffff99;}
+
+.slidecontainer {
+  width: 100%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.slider {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 25px; /* Specified height */
+  background: #d3d3d3; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #4CAF50; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #4CAF50; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}

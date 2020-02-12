@@ -1,60 +1,117 @@
 <html>
   <head>
     <title>Sommelier App</title>
+    
     <link rel="stylesheet" media="screen" href="/static/bootstrap.min.css">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
   </head>
   <body>
-    <div class="jumbotron">
+    <!-- <div class="jumbotron", background-image: href="/static/images/copy.gif"); -->
+    <div class="jumbotron", style="background-color:rgba(140, 145, 154, 0.796)">
       <div class="container">
-        <h1 class="display-3">Your Personal Sommelier</h1>
-        <p>
-          Easier select your next bottle of wine
-        </p>
-        <p>
+        <h1 class="display-3">Personal Sommelier</h1>
+        
+        <!-- <p> -->
+          <hr>
           <form action="/get_wine" method="post">
-            <p>Input the wine ID to get similar taste wine.</p>
-            <input type="text" name="wine_id" value="89368">
-            <input type="submit" class="btn btn-primary btn" value="Send">
-            <p>========================================</p>
-          </form>
-
-          <form action="/get_results" method="post">
-            <p>Input your User ID, input 0 if you don't have.</p>
-            <input type="text" name="user_id" value="0">
-            <input type="submit" class="btn btn-primary btn" value="Login">
-
-            <p>========================================</p>
-            <p>Alcohol</p>
-            <input type="text" name="Alcohol" value="12.82">
-            <p>Malic acid</p>
-            <input type="text" name="Malic acid" value="3.37">
-            <p>Ash</p>
-            <input type="text" name="Ash" value="2.3">
-            <p>Alcalinity of ash</p>
-            <input type="text" name="Alcalinity of ash" value="19.5">
-            <p>Magnesium</p>
-            <input type="text" name="Magnesium" value="88.0">
-            <p>Total phenols</p>
-            <input type="text" name="Total phenols" value="1.48">
-            <p>Flavanoids</p>
-            <input type="text" name="Flavanoids" value="0.66">
-            <p>Nonflavanoid phenols</p>
-            <input type="text" name="Nonflavanoid phenols" value="0.4">
-            <p>Proanthocyanins</p>
-            <input type="text" name="Proanthocyanins" value="0.97">
-            <p>Color intensity</p>
-            <input type="text" name="Color intensity" value="10.26">
-            <p>Hue</p>
-            <input type="text" name="Hue" value="0.72">
-            <p>OD280/OD315 of diluted wines</p>
-            <input type="text" name="OD280/OD315 of diluted wines" value="1.75">
-            <p>Proline</p>
-            <input type="text" name="Proline" value="685.0">
+            <h2>Input wine to get similar taste wine</h2>
             <br>
-            
+            <h4>
+              <input type="radio" name="options" id="option1", value="option1"> Wine ID
+              <input type="text" name="wine_id" value="89368", size="6"> 
+            </h4> 
+            <br>
+            <h4>
+              <input type="radio" name="options" id="option2", value="option2"> Title 
+              <input type="text" name="wine_title" value="Quinta dos Avidagos 2011 Avidagos Red (Douro)", size="60"> <br><br>
+            </h4>
+            <input type="submit" class="btn btn-primary btn" value="Send">
+          </form>
+          <hr>
+          
+          <form action="/get_results" method="post">
+            <h2>Input your user ID</h2>
+            <h4>
+            <input type="text" name="user_id" value="0", size="2"><br><br>
+            </h4>
+            <input type="submit" class="btn btn-primary btn" value="Send">
+            <br>
+            <hr>
           </form>
           
-        </p>
+          <form action="/get_wine_info" method="post">
+            <h2>Fine wine</h2>
+            <br>
+              <h4>category</h4>
+              <!-- <form> -->
+              <select name="category">
+                <option type="text", value="red">red
+                <option type="text", value="white">white
+                <option type="text", value="sparkling">sparkling
+                <option type="text", value="rose">rose
+                <option type="text", value="other">others
+              </select>
+              <br><br>
+              <h4>country</h4>
+              <!-- <form> -->
+              <select name="country">
+                <option type="text", value="US">US
+                <option type="text", value="France">France
+                <option type="text", value="Italy">Italy
+                <option type="text", value="Spain">Spain
+                <option type="text", value="Portugal">Portugal
+                <option type="text", value="Chile">Chile
+                <option type="text", value="Others">others
+              </select>
+              <br><br>
+
+              <div class="rangeslider"> 
+                <h4>Max Price <span id="demo"></span></h4>
+                <input  name="price_max" type="range" min="1" max="100" value="50"
+                                class="myslider" id="sliderRange"> 
+              </div> 
+                
+              <script> 
+              var rangeslider = document.getElementById("sliderRange"); 
+              var output = document.getElementById("demo"); 
+              output.innerHTML = rangeslider.value; 
+                
+              rangeslider.oninput = function() { 
+                output.innerHTML = this.value; 
+              } 
+              </script> 
+              <!-- <h4>Flavor you like</h4> -->
+              <!-- <table>
+                <tr>
+                  <td><input type="checkbox" name="flavor1" value="fruit"> fruit<br></td>
+                  <td><input type="checkbox" name="flavor2" value="acid"> acid<br> </td>
+                  <td><input type="checkbox" name="flavor3" value="cherri"> cherry<br></td>
+                  <td><input type="checkbox" name="flavor3" value="dri"> dry<br></td>
+                
+                </tr>
+                <tr>
+                  <td><input type="checkbox" name="flavor1" value="appl"> apple<br></td>
+                  <td><input type="checkbox" name="flavor2" value="oak"> oak<br> </td>
+                  <td><input type="checkbox" name="flavor3" value="herb"> herb<br></td>
+                  <td><input type="checkbox" name="flavor3" value="citrus"> citrus<br></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" name="flavor3" value="blackberri"> blackberry<br></td>
+                  <td><input type="checkbox" name="flavor3" value="pepper"> pepper<br></td>
+                  <td><input type="checkbox" name="flavor3" value="vanilla"> vanilla<br></td>
+                  <td><input type="checkbox" name="flavor3" value="lemon"> lemon<br></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" name="flavor3" value="raspberri"> raspberry<br></td>
+                  <td><input type="checkbox" name="flavor3" value="peach"> peach<br></td>
+                  <td><input type="checkbox" name="flavor3" value="chocol"> chocolate<br></td>
+                  <td><input type="checkbox" name="flavor3" value="spici"> spicy<br></td>
+                </tr>
+              </table> -->
+            <br>
+            <input type="submit" class="btn btn-primary btn" value="Find">
+            </form>
+        <!-- </p> -->
       </div>
     </div>
   </body>
