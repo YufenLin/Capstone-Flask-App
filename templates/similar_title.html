@@ -6,25 +6,28 @@
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>
-        Do you mean?
-    </h1>
-    <hr>
-        <form action="/get_wine" method="post">
-        <h2>Input again</h2>
-        <h2>
-            <input type="radio" name="options" id="option1", value="option1"> Wine ID
-            <input type="text" name="wine_id" value="89368", size="6"> 
+    <div style="background-image: linear-gradient(-60deg, rgb(202, 18, 211), rgba(159, 86, 175, 0.289));">
+        <!-- <h4 class="display-3", text-align="center", style = "font-family:Brush Script MT,arial,helvetica; ">Personal Sommelier</h4> -->
+    <h1 class="display-3", style = "font-family:Brush Script MT,arial,helvetica; ">Personal Sommelier</h1>
     
+    <form action="/get_wine" method="post">
+        <h4> &nbsp;&nbsp;Search again
         <br>
-            <input type="radio" name="options" id="option2", value="option2"> Title 
-            <input type="text" name="wine_title" value="Quinta dos Avidagos 2011 Avidagos Red (Douro)", size="60"> <br><br>
-            <input type="submit" class="btn btn-primary btn" value="Send">
-        </h2>
-        
+        <br>
+          &nbsp;
+          <input type="radio" name="options" id="option2", value="option2", checked="checked" > Title &nbsp;
+          <input type="text" name="wine_title" value="Quinta dos Avidagos 2011 Avidagos Red (Douro)", size="60"> 
+          <br><br>
+          &nbsp;
+          <input type="submit" class="btn btn-primary btn" value="Send">
+          <!-- <input type="radio" name="options" id="option1", value="option1"> Wine ID -->
+          <!-- <input type="text" name="wine_id" value="89368", size="6"> -->
+        </h4>
         </form>
+        
+    <div style="text-align: right">
         <a href="/">Go back home</a>
-    <hr>
+    </div>
     <!-- {{similar_user_top}} -->
     {% for table in tables %}
         <!-- {{columns[loop.index]}} -->
@@ -36,7 +39,9 @@
     <br>
 
     <!-- <img src="{{ url_for('static', filename='upward_sloping_chart.png') }}" alt=""> -->
-    <a href="/">Go back home</a>
+    <div style="text-align: left">
+        <a href="/">Go back home</a>
+    </div>
     
 </body>
 </html>

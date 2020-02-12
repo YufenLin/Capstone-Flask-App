@@ -1,28 +1,33 @@
 body            { font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;}
 a, h1, h2, h3       { color: #377ba8; }
 h1, h2          { margin: 20px; }
-h1              { border-bottom: 2px solid #eee;  }
-h2              { font-size: 1.2em;}
+h1              { border-bottom: 2px solid #eee;}
+h2              { font-size: 1.4em;}
 h3              { font-size: 1em; }
-h4              { font-size: 0.3em; }
+/* h4              { font-size: 0.3em; } */
+h4              { font-size: 17px; }
 
 
 
 table.dataframe, .dataframe th, .dataframe td {
+  
   border: none;
-  border-bottom: 1px solid #C8C8C8;
+  border-bottom: 1px solid #9cb2d7;
   border-collapse: collapse;
   text-align:left;
-  padding: 6px;
+  padding : 6px;
   margin-bottom: 40px;
   font-size: 1em;
   /* background-color: #c89cd7; */
-  background-color: #9cb2d7;
+  /* background-color: #C8C8C8; */
+  /* background-color: black; */
+  /* background-color: rgb(210, 192, 213); */
 }
 
 .my_df th {
-    background-color: #add8e6;
-    color: white;
+    /* background-color: #add8e6; */
+    /* background-color: rgb(202, 18, 211); */
+    color: rgba(78, 40, 191, 0.7);
 }
 
 .female th {
