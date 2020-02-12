@@ -77,9 +77,10 @@ def get_wine_data(wine_id_list, wine_user):
     top_n_df = wine_user[wine_user['wine_id'].isin(wine_id_list)]
     top_n_df = top_n_df.sort_values("wine_id") 
     top_n_df.drop_duplicates(subset ="wine_id", keep = 'first', inplace = True) 
+    top_n_df.index = np.arange(1, len(top_n_df) + 1)
     
-    return top_n_df[['wine_id','title','country','price','category','points','flavor_words_str', 'description']]
-    # return top_n_df[['title','country','price', 'description']]
+    # return top_n_df[['wine_id','title','country','price','category','points','flavor_words_str', 'description']]
+    return top_n_df[['title','country','province','category','variety','price', 'description']]
 
 def get_from_cos(wineid, wine, n, cosine_sim):
     indices = list(wine.wine_id)
@@ -193,7 +194,7 @@ def query_wine(cat, country, price_max):
 
 
     resutlt = top_rating_find_wine(result)
-    result_id = result['wine_id'].head().values
+    result_id = result['wine_id'].head(10).values
     result_df = get_wine_data(result_id, wine_user)
 
     return result_df

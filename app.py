@@ -2,7 +2,7 @@ from flask import Flask, send_from_directory, render_template, request, abort
 from waitress import serve
 from src.models.wine_predictor import predict_wine
 
-from src.models.sommelier import check_user_exist, have_similar_user, recommend_wine, get_wine_id, recommend_from_top_rating, get_user_name, top_rating, query_wine
+from src.models.sommelier import check_user_exist, have_similar_user, recommend_wine, get_wine_id, recommend_from_top_rating, get_user_name, top_rating, query_wine, get_similar_title
 from src.utils import validate_input_wine, validate_input_user
 
 app = Flask(__name__, static_url_path="/static")
@@ -25,8 +25,13 @@ def get_wine():
         wine_id = int(data['wine_id'])
     if data['options'] == "option2":
         wine_title = data['wine_title']
-        wine_id = get_wine_id(wine_title)
+        any_data, wine_id = get_wine_id(wine_title)
         
+        if any_data == 0:
+            get_similar_title_df = get_similar_title(wine_title)    
+            # return render_template("new_user.html")
+            return render_template("similar_title.html", tables=[get_similar_title_df.to_html(classes='my_df')], columns=get_similar_title_df.columns.values)
+    
     top_n_similar_wine = recommend_wine(wine_id, n=5)
     return render_template("similar_wine.html", wine_id=wine_id, tables=[top_n_similar_wine.to_html(classes='my_df')], columns=top_n_similar_wine.columns.values)
     
@@ -62,8 +67,8 @@ def get_wine_info():
     # user_id = int(data['user_id'])
     # print(wine_cat)
     result = query_wine(wine_cat, wine_country, price_max)
-
-    return render_template("new_user.html",tables=[result.to_html(classes='my_df')], columns=result.columns.values)
+    
+    return render_template("find_wine.html",tables=[result.to_html(classes='my_df')], columns=result.columns.values)
 
 
 if __name__ == "__main__":
